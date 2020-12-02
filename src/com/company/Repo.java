@@ -30,4 +30,8 @@ public class Repo {
     public Task getTask(int taskId){
         return tasks.get(taskId);
     }
+
+    public void removeTask(int taskId){
+        tasks.remove(taskId);
+    }
 }
