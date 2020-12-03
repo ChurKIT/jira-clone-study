@@ -22,7 +22,7 @@ public class DAO {
 
     //Множество всех задач
     protected Map<Integer, Task> tasks = new HashMap<Integer, Task>();
-    //Ид для таски
+    //Счетчик ID задач
     private AtomicInteger atomTaskId = new AtomicInteger();
 
 

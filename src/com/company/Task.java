@@ -15,8 +15,17 @@ public class Task {
         this.taskName = taskName;
         this.taskAuthor = taskAuthor;
         this.taskAssignee = taskAssignee;
+        this.taskState = "New";
         this.taskId = DAO.getSingleton().setTask(this);
         System.out.println("Задача с параметрами " + this.toString() + " успешно создана");
+    }
+
+    public void setTaskAssignee(String newAssignee){
+        this.taskAssignee = newAssignee;
+    }
+
+    public void setTaskState(String newTaskState){
+        this.taskState = newTaskState;
     }
 
 
