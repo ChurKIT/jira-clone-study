@@ -1,11 +1,11 @@
 package com.company;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Scanner;
+
 
 public class Command {
     Scanner reader = new Scanner(System.in);
@@ -18,13 +18,23 @@ public class Command {
             String newTask = reader.nextLine();
             String[] newTaskParameters;
             newTaskParameters = newTask.split(":");
-            new Task(Integer.parseInt(newTaskParameters[0]), newTaskParameters[1], newTaskParameters[2], newTaskParameters[3], newTaskParameters[4]);
+            new Task(newTaskParameters[0], newTaskParameters[1], newTaskParameters[2]);
         }
         if (command.equals("print")){
-            System.out.println(Task.getTask(reader.nextInt()).toString());
+            try {
+                System.out.println(Task.getTask(reader.nextInt()).toString());
+            }
+            catch (NullPointerException e){
+                System.out.println("ERROR : Неккоректный ID задачи");
+            }
         }
         if (command.equals("remove")){
-            Repo.getSingleton().removeTask(reader.nextInt());
+            DAO.getSingleton().removeTask(reader.nextInt());
+        }
+        if (command.equals("printAll")){
+            for (Map.Entry<Integer, Task> entry : DAO.getSingleton().tasks.entrySet()){
+                System.out.println(entry.getValue().toString());
+            }
         }
     }
 }
