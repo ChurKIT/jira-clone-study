@@ -15,7 +15,7 @@ public class Task {
         this.taskName = taskName;
         this.taskAuthor = taskAuthor;
         this.taskAssignee = taskAssignee;
-        this.taskState = "New";
+        this.taskState = TaskState.NEW.toString();
         this.taskId = DAO.getSingleton().setTask(this);
         System.out.println("Задача с параметрами " + this.toString() + " успешно создана");
     }
@@ -24,8 +24,19 @@ public class Task {
         this.taskAssignee = newAssignee;
     }
 
-    public void setTaskState(String newTaskState){
-        this.taskState = newTaskState;
+    public void setTaskState(String newTaskState) {
+        if (newTaskState.equals(TaskState.SOLVED.toString())) {
+            this.taskState = TaskState.SOLVED.toString();
+        }
+        if (newTaskState.equals(TaskState.CLOSED.toString())) {
+            this.taskState = TaskState.CLOSED.toString();
+        }
+        if (newTaskState.equals(TaskState.RESOLVED.toString())) {
+            this.taskState = TaskState.RESOLVED.toString();
+        }
+        if (newTaskState.equals(TaskState.REOPENED.toString())) {
+            this.taskState = TaskState.REOPENED.toString();
+        }
     }
 
 

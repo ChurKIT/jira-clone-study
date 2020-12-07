@@ -11,30 +11,31 @@ public class Command {
     Scanner reader = new Scanner(System.in);
 
     public Command(String command) throws IOException {
-        if (command.equals("help")){
+        String[] splitCommand = command.split(" ");
+        if (splitCommand [0].equals("/help")){
             System.out.println(new String(Files.readAllBytes(Paths.get("help.txt"))));
         }
-        if (command.equals("new")){
-            String newTask = reader.nextLine();
-            String[] newTaskParameters;
-            newTaskParameters = newTask.split(":");
-            new Task(newTaskParameters[0], newTaskParameters[1], newTaskParameters[2]);
+        if (splitCommand [0].equals("/new")){
+            new Task(splitCommand[1], splitCommand[2], splitCommand[3]);
         }
-        if (command.equals("print")){
+        if (splitCommand [0].equals("/print")){
             try {
-                System.out.println(Task.getTask(reader.nextInt()).toString());
+                System.out.println(Task.getTask(Integer.parseInt(splitCommand[1])).toString());
             }
             catch (NullPointerException e){
                 System.out.println("ERROR : Неккоректный ID задачи");
             }
         }
-        if (command.equals("remove")){
-            DAO.getSingleton().removeTask(reader.nextInt());
+        if (splitCommand [0].equals("/remove")){
+            DAO.getSingleton().removeTask(Integer.parseInt(splitCommand[1]));
         }
-        if (command.equals("printAll")){
+        if (splitCommand [0].equals("/printAll")){
             for (Map.Entry<Integer, Task> entry : DAO.getSingleton().tasks.entrySet()){
                 System.out.println(entry.getValue().toString());
             }
+        }
+        if (splitCommand [0].equals("/setState")){
+            Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2]);
         }
     }
 }

@@ -13,6 +13,6 @@ public class Main {
         do{
             command = reader.readLine();
             new Command(command);
-        } while (!command.equals("quit"));
+        } while (!command.equals("/quit"));
     }
 }
