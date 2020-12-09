@@ -1,21 +1,23 @@
 package com.company;
 
+import com.company.Tasks.Task;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 
-public class DAO {
+public class RepositoryTasks {
     //Реализация Singleton
-    private static DAO singleton;
+    private static RepositoryTasks singleton;
 
-    private DAO() {
+    private RepositoryTasks() {
     }
 
-    public static DAO getSingleton() {
+    public static RepositoryTasks getSingleton() {
         if (singleton == null) {
-            singleton = new DAO();
+            singleton = new RepositoryTasks();
         }
         return singleton;
     }

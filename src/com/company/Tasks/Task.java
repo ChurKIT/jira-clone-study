@@ -1,4 +1,6 @@
-package com.company;
+package com.company.Tasks;
+
+import com.company.RepositoryTasks;
 
 public class Task {
     private int taskId;
@@ -8,7 +10,7 @@ public class Task {
     private String taskState;
 
     public static Task getTask(int taskId) {
-        return DAO.getSingleton().returnTask(taskId - 1);
+        return RepositoryTasks.getSingleton().returnTask(taskId - 1);
     }
 
     public Task(String taskName, String taskAuthor, String taskAssignee) {
@@ -16,7 +18,7 @@ public class Task {
         this.taskAuthor = taskAuthor;
         this.taskAssignee = taskAssignee;
         this.taskState = TaskState.NEW.toString();
-        this.taskId = DAO.getSingleton().setTask(this);
+        this.taskId = RepositoryTasks.getSingleton().setTask(this);
         System.out.println("Задача с параметрами " + this.toString() + " успешно создана");
     }
 
@@ -25,8 +27,8 @@ public class Task {
     }
 
     public void setTaskState(String newTaskState) {
-        if (newTaskState.equals(TaskState.SOLVED.toString())) {
-            this.taskState = TaskState.SOLVED.toString();
+        if (newTaskState.equals(TaskState.INPROGRESS.toString())) {
+            this.taskState = TaskState.INPROGRESS.toString();
         }
         if (newTaskState.equals(TaskState.CLOSED.toString())) {
             this.taskState = TaskState.CLOSED.toString();

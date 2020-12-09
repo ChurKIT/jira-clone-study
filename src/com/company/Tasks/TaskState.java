@@ -1,9 +1,9 @@
-package com.company;
+package com.company.Tasks;
 
 public enum TaskState {
 
     NEW ("New"),
-    SOLVED ("Solved"),
+    INPROGRESS ("In Progress"),
     RESOLVED ("Resolved"),
     CLOSED ("Closed"),
     REOPENED ("Reopened");

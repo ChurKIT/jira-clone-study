@@ -8,8 +8,8 @@
 /new Name Author Assignee     //Добавление новой задачи
 
 
-/setState                     //Изменение статуса задачи (New,
-                                Solved, Resolved, Reopened, Closed)
+/setState Id State            //Изменение статуса задачи (New,
+                                In Progress, Resolved, Reopened, Closed)
               
 /remove Id                    //Удаление задачи с индексом Id
 

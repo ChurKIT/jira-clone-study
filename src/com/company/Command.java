@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.Tasks.Task;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -27,14 +29,17 @@ public class Command {
             }
         }
         if (splitCommand [0].equals("/remove")){
-            DAO.getSingleton().removeTask(Integer.parseInt(splitCommand[1]));
+            RepositoryTasks.getSingleton().removeTask(Integer.parseInt(splitCommand[1]));
         }
         if (splitCommand [0].equals("/printAll")){
-            for (Map.Entry<Integer, Task> entry : DAO.getSingleton().tasks.entrySet()){
+            for (Map.Entry<Integer, Task> entry : RepositoryTasks.getSingleton().tasks.entrySet()){
                 System.out.println(entry.getValue().toString());
             }
         }
         if (splitCommand [0].equals("/setState")){
+            if (splitCommand[2].equals("In") && splitCommand[3].equals("Progress")){
+                Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2] + " " + splitCommand[3]);
+            }
             Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2]);
         }
     }
