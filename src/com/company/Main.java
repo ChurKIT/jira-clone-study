@@ -10,10 +10,17 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Введите логин и пароль:");
-        new User(reader.readLine(), reader.readLine());
-        System.out.println("Введите команду:");
         String command;
+        while (!User.isLogIn()) {
+            System.out.println("Пожалуйста авторизируйтесь или зарегистрируйтесь с помощью команд /singin или /singup");
+            command = reader.readLine();
+            if (command.equals("/quit")){
+                System.exit(0);
+            }
+            if (command.equals("/singin") || command.equals("/singup")){
+                new Command(command);
+            }
+        }
         do{
             command = reader.readLine();
             new Command(command);
