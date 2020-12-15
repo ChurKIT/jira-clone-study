@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.Tasks.Task;
+import com.company.Users.Roles;
 import com.company.Users.User;
 
 import java.io.IOException;
@@ -11,17 +12,24 @@ import java.util.Scanner;
 
 
 public class Command {
-    private static User thisUser;
+    static User thisUser;
     Scanner reader = new Scanner(System.in);
 
     public Command(String command) throws IOException {
         String[] splitCommand = command.split(" ");
 
         if (splitCommand [0].equals("/singin")){
-            System.out.println("Введите логин и пароль:");
-            thisUser = new User(reader.next(), reader.next());
+            try {
+                System.out.println("Введите логин и пароль:");
+                thisUser = User.singIn(reader.next(), reader.next());
+            } catch (NullPointerException e){
+                System.out.println("Такого логина не существует");
+            }
+            if (User.isLogIn()){
+                System.out.println("Добро пожаловать, " + thisUser.getFirstName() + " " + thisUser.getLastName());
+            }
         }
-
+        //Регистрация нового пользователя
         if (splitCommand [0].equals("/singup")){
             System.out.println("Введите имя:");
             String firstName = reader.nextLine();
@@ -29,7 +37,7 @@ public class Command {
             String lastName = reader.nextLine();
             System.out.println("Введите логин:");
             String login = reader.nextLine();
-            while (RepositoryUsers.getSingleton().containsLogin(login)){
+            while (RepositoryUsers.getInstance().containsLogin(login)){
                 System.out.println("Такой логин уже существует, попробуйте другой:");
                 login = reader.nextLine();
             }
@@ -37,7 +45,7 @@ public class Command {
             String password = reader.nextLine();
             System.out.println("Введите должность:");
             String role = reader.nextLine();
-            thisUser = new User(login, password, firstName, lastName, role);
+            new User(login, password, firstName, lastName, role);
             System.out.println("Регистрация прошла успешно");
         }
 
@@ -46,36 +54,72 @@ public class Command {
         }
 
         if (splitCommand [0].equals("/new")){
-            System.out.println("Введите логин дальнейшего держателя задачи:");
-            String assignee = reader.nextLine();
-            new Task(splitCommand[1], thisUser.getLogin(), assignee);
+            if (thisUser.getRole() == Roles.ADMIN || thisUser.getRole() == Roles.DEVELOPER || thisUser.getRole() == Roles.TESTER) {
+                System.out.println("Введите логин дальнейшего держателя задачи:");
+                String assignee = reader.nextLine();
+                String taskName = "";
+                for (int i = 1; i < splitCommand.length; i++){
+                    taskName = taskName + " " + splitCommand[i];
+                }
+                new Task(taskName, thisUser.getLogin(), assignee);
+            } else {
+                System.out.println("ERROR : У Вас недостаточно прав");
+            }
         }
 
         if (splitCommand [0].equals("/print")){
-            try {
-                System.out.println(Task.getTask(Integer.parseInt(splitCommand[1])).toString());
-            }
-            catch (NullPointerException e){
-                System.out.println("ERROR : Неккоректный ID задачи");
+            if (thisUser.getRole() == Roles.ADMIN || thisUser.getRole() == Roles.DEVELOPER || thisUser.getRole() == Roles.TESTER) {
+                try {
+                    System.out.println(Task.getTask(Integer.parseInt(splitCommand[1])).toString());
+                } catch (NullPointerException e) {
+                    System.out.println("ERROR : Неккоректный ID задачи");
+                }
+            } else {
+                System.out.println("ERROR : У Вас недостаточно прав");
             }
         }
 
         if (splitCommand [0].equals("/remove")){
-            RepositoryTasks.getSingleton().removeTask(Integer.parseInt(splitCommand[1]));
+            if (thisUser.getRole() == Roles.ADMIN || thisUser.getRole() == Roles.DEVELOPER || thisUser.getRole() == Roles.TESTER) {
+                RepositoryTasks.getSingleton().removeTask(Integer.parseInt(splitCommand[1]));
+            } else {
+                System.out.println("ERROR : У Вас недостаточно прав");
+            }
         }
 
         if (splitCommand [0].equals("/printAll")){
-            for (Map.Entry<Integer, Task> entry : RepositoryTasks.getSingleton().tasks.entrySet()){
-                System.out.println(entry.getValue().toString());
+            if (thisUser.getRole() == Roles.ADMIN) {
+                for (Map.Entry<Integer, Task> entry : RepositoryTasks.getSingleton().tasks.entrySet()) {
+                    System.out.println(entry.getValue().toString());
+                }
+            } else {
+                System.out.println("ERROR : У Вас недостаточно прав");
             }
         }
 
-        if (splitCommand [0].equals("/setState")){
-            if (splitCommand[2].equals("In") && splitCommand[3].equals("Progress")){
-                Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2] + " " + splitCommand[3]);
+        if (splitCommand [0].equals("/setState")) {
+            if (thisUser.getRole() == Roles.ADMIN || thisUser.getRole() == Roles.DEVELOPER || thisUser.getRole() == Roles.TESTER) {
+                if (splitCommand[2].equals("In") && splitCommand[3].equals("Progress")) {
+                    Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2] + " " + splitCommand[3]);
+                }
+                Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2]);
+            } else {
+                System.out.println("ERROR : У Вас недостаточно прав");
             }
-            Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2]);
         }
 
+        if (splitCommand [0].equals("/userinfo")) {
+            if (User.isLogIn()) {
+                System.out.println("Логин: " + thisUser.getLogin());
+                System.out.println("Статус: " + thisUser.getRole().toString());
+            } else {
+                System.out.println("Пожалуйста войдите в систему");
+            }
+        }
+
+        if (splitCommand [0].equals("/logout")){
+            thisUser.logOut();
+            System.out.println("Пожалуйста авторизируйтесь или зарегистрируйтесь с помощью команд /singin или /singup");
+        }
     }
 }

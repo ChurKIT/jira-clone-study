@@ -1,10 +1,9 @@
 package com.company;
 
-import com.company.Tasks.Task;
+import com.company.Users.User;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RepositoryUsers {
     //Реализация Singleton
@@ -13,7 +12,7 @@ public class RepositoryUsers {
     private RepositoryUsers() {
     }
 
-    public static RepositoryUsers getSingleton() {
+    public static RepositoryUsers getInstance() {
         if (singleton == null) {
             singleton = new RepositoryUsers();
         }
@@ -21,15 +20,18 @@ public class RepositoryUsers {
     }
 
     //Множество всех пользователей
-    protected Map<String, String> users = new HashMap<String, String>();
+    protected Map<String, String> logPass = new HashMap<String, String>();
+    protected Map<String, User> logUser = new HashMap<String, User>();
 
-    public void singUp(String login, String password){
-        users.put(login, password);
+    public void singUp(String login, String password, User user){
+        logPass.put(login, password);
+        logUser.put(login, user);
+
     }
 
     public boolean singIn (String login, String password){
-        if (users.containsKey(login)){
-            if (users.get(login).equals(password)){
+        if (logPass.containsKey(login)){
+            if (logPass.get(login).equals(password)){
                 return true;
             } else {
                 return false;
@@ -39,8 +41,12 @@ public class RepositoryUsers {
         }
     }
 
+    public User getUser(String login){
+        return logUser.get(login);
+    }
+
     public boolean containsLogin (String login){
-        return users.containsKey(login);
+        return logPass.containsKey(login);
     }
 
 

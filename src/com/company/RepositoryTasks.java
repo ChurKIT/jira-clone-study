@@ -39,7 +39,7 @@ public class RepositoryTasks {
     }
 
     public void removeTask(int taskId){
-        tasks.remove(taskId);
+        tasks.remove(taskId - 1);
     }
 
 }
