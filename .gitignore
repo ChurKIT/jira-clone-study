@@ -1,0 +1,14 @@
+# Default ignored files
+/shelf/
+/.idea/
+/jira-clone-edu.iml
+/pom.xml
+/target/
+/src/test/
+/src/main/resources/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
