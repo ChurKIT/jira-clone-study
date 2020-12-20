@@ -50,7 +50,7 @@ public class Command {
         }
 
         if (splitCommand [0].equals("/help")){
-            System.out.println(new String(Files.readAllBytes(Paths.get("help.txt"))));
+            System.out.println(new String(Files.readAllBytes(Paths.get("src/main/resources/help.txt"))));
         }
 
         if (splitCommand [0].equals("/new")){
