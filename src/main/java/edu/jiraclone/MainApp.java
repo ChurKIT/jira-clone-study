@@ -14,7 +14,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-       Parent root = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("/singIn.fxml"));
        stage.setTitle("JiraClone by ChurKIT");
        stage.setScene(new Scene(root, 800, 400));
        stage.show();
