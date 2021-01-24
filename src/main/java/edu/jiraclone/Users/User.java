@@ -9,9 +9,22 @@ public class User {
     private String firstName;
     private String lastName;
     private UserRole role;                            // не реализовано
-    private static boolean isLogIn = false;
+    private static boolean logIn = false;
+
+    public static void setLogIn(boolean logIn) {
+        User.logIn = logIn;
+    }
+
     //конструктор для добавления нового пользователя в RepositoryUsers
     public User(String login, String password, String firstName, String lastName, String role){
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = new UserRole(role);
+        RepositoryUsers.getInstance().singUp(login, password, this);
+    }
+    //конструктор для добавления нового пользователя в RepositoryUsers
+    public User(String login, String password, String firstName, String lastName, Roles role){
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,7 +48,7 @@ public class User {
 
     private static void successLogin(){
         System.out.println("Успешный вход");
-        isLogIn = true;
+        logIn = true;
     }
 
     private static void unSuccessLogin(String login){
@@ -44,11 +57,11 @@ public class User {
         } else {
             System.out.println("Такого логина не существует, пожалуйста зарегистрируйтесь");
         }
-        isLogIn = false;
+        logIn = false;
     }
 
     public static boolean isLogIn() {
-        return isLogIn;
+        return logIn;
     }
 
     public String getLogin(){
@@ -60,7 +73,7 @@ public class User {
     }
 
     public void logOut(){
-        isLogIn = false;
+        logIn = false;
     }
 
     public String getFirstName() {

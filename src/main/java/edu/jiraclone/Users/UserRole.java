@@ -17,6 +17,10 @@ public class UserRole {
         }
     }
 
+    public UserRole(Roles role){
+        this.role = role;
+    }
+
 
     public Roles getRole() {
         return role;
