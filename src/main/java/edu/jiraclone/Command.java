@@ -70,7 +70,7 @@ public class Command {
         if (splitCommand [0].equals("/print")){
             if (thisUser.getRole() == Roles.ADMIN || thisUser.getRole() == Roles.DEVELOPER || thisUser.getRole() == Roles.TESTER) {
                 try {
-                    System.out.println(Task.getTask(Integer.parseInt(splitCommand[1])).toString());
+                    System.out.println(RepositoryTasks.getSingleton().returnTask(Integer.parseInt(splitCommand[1])).toString());
                 } catch (NullPointerException e) {
                     System.out.println("ERROR : Неккоректный ID задачи");
                 }
@@ -89,25 +89,25 @@ public class Command {
 
         if (splitCommand [0].equals("/printAll")){
             if (thisUser.getRole() == Roles.ADMIN) {
-                for (Map.Entry<Integer, Task> entry : RepositoryTasks.getSingleton().tasks.entrySet()) {
-                    System.out.println(entry.getValue().toString());
+                for (Task task : RepositoryTasks.getSingleton().getTasks()) {
+                    System.out.println(task.toString());
                 }
             } else {
                 System.out.println("ERROR : У Вас недостаточно прав");
             }
         }
-
+        /*
         if (splitCommand [0].equals("/setState")) {
             if (thisUser.getRole() == Roles.ADMIN || thisUser.getRole() == Roles.DEVELOPER || thisUser.getRole() == Roles.TESTER) {
                 if (splitCommand[2].equals("In") && splitCommand[3].equals("Progress")) {
-                    Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2] + " " + splitCommand[3]);
+                    RepositoryTasks.getSingleton().returnTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2] + " " + splitCommand[3]);
                 }
-                Task.getTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2]);
+                RepositoryTasks.getSingleton().returnTask(Integer.parseInt(splitCommand[1])).setTaskState(splitCommand[2]);
             } else {
                 System.out.println("ERROR : У Вас недостаточно прав");
             }
         }
-
+        */
         if (splitCommand [0].equals("/userinfo")) {
             if (User.isLogIn()) {
                 System.out.println("Логин: " + thisUser.getLogin());
