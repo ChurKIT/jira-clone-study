@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 public class Main{
 
     public static void main(String[] args) throws IOException {
+        RepositoryTasks.getSingleton().readFromJson();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String command;
         while (!User.isLogIn()) {
@@ -25,5 +26,6 @@ public class Main{
             command = reader.readLine();
             new Command(command);
         } while (!command.equals("/quit"));
+        RepositoryTasks.getSingleton().writeToJson();
     }
 }
