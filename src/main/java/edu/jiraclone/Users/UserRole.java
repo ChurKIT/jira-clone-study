@@ -9,7 +9,7 @@ public class UserRole {
             this.role = Roles.DEVELOPER;
         } else if (role.equalsIgnoreCase("tester") || role.equalsIgnoreCase("test") || role.equalsIgnoreCase("тестер") || role.equalsIgnoreCase("тестировщик")){
             this.role = Roles.TESTER;
-        } else if (role.equals("/make me admin")){
+        } else if (role.equals("/make me admin") || role.equalsIgnoreCase("admin")){
             this.role = Roles.ADMIN;
         } else {
             this.role = Roles.GUEST;
