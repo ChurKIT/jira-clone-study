@@ -2,10 +2,13 @@ package edu.jiraclone.Users;
 
 import edu.jiraclone.RepositoryUsers;
 
+import java.util.Arrays;
+
 
 public class User {
 
     private String login;
+    private String password;
     private String firstName;
     private String lastName;
     private UserRole role;                            // не реализовано
@@ -21,6 +24,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = new UserRole(role);
+        this.password = password;
         RepositoryUsers.getInstance().singUp(login, password, this);
     }
     //конструктор для добавления нового пользователя в RepositoryUsers
@@ -29,11 +33,12 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = new UserRole(role);
+        this.password = password;
         RepositoryUsers.getInstance().singUp(login, password, this);
     }
 
     public User() {
-
+        RepositoryUsers.getInstance().singUp(login, password, this);
     }
 
 
@@ -58,6 +63,18 @@ public class User {
             System.out.println("Такого логина не существует, пожалуйста зарегистрируйтесь");
         }
         logIn = false;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public static boolean isLogIn() {

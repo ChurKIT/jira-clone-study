@@ -72,9 +72,9 @@ public class RepositoryTasks implements Serializable {
                 }
             });
         } catch (MismatchedInputException e){
-            System.out.println("ERROR: Json файл пустой");
+            System.out.println("ERROR: tasks.json пустой");
         } catch (IOException e) {
-            System.out.println("ERROR: Ошибка при чтении из Json");
+            System.out.println("ERROR: Ошибка при чтении из tasks.json");
             e.printStackTrace();
         }
     }
@@ -84,7 +84,7 @@ public class RepositoryTasks implements Serializable {
         try {
             mapper.writeValue(new File("src/main/resources/tasks.json"), this.tasks);
         } catch (IOException e) {
-            System.out.println("ERROR: Ошибка при записи в Json");
+            System.out.println("ERROR: Ошибка при записи tasks.json");
             e.printStackTrace();
         }
     }
