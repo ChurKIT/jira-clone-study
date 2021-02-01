@@ -9,7 +9,9 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     public static void main(String[] args) throws Exception {
+        readJsons();
         launch(args);
+        writeJsons();
     }
 
     @Override
@@ -18,5 +20,15 @@ public class MainApp extends Application {
        stage.setTitle("JiraClone by ChurKIT");
        stage.setScene(new Scene(root, 800, 400));
        stage.show();
+    }
+
+    public static void readJsons(){
+        RepositoryUsers.getInstance().readFromJson();
+        RepositoryTasks.getSingleton().readFromJson();
+    }
+
+    public static void writeJsons(){
+        RepositoryTasks.getSingleton().writeToJson();
+        RepositoryUsers.getInstance().writeToJson();
     }
 }

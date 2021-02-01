@@ -92,6 +92,14 @@ public class RepositoryUsers implements Serializable {
         return users;
     }
 
+    public List<String> getLogins(){
+        List<String> logins = new ArrayList<String>();
+        for (User user : users){
+            logins.add(user.getLogin());
+        }
+        return logins;
+    }
+
     public void setUsers(List<User> users) {
         this.users = users;
     }
