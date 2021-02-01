@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 public class User {
 
+    private static transient String currentLogin = null;
+
     private String login;
     private String password;
     private String firstName;
@@ -44,6 +46,7 @@ public class User {
 
     public static User singIn(String login, String password){
         if (RepositoryUsers.getInstance().singIn(login, password)){
+            setCurrentLogin(login);
             successLogin();
         } else {
             unSuccessLogin(login);
@@ -99,5 +102,13 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public static String getCurrentLogin() {
+        return currentLogin;
+    }
+
+    public static void setCurrentLogin(String currentLogin) {
+        User.currentLogin = currentLogin;
     }
 }
